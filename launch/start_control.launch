@@ -1,0 +1,6 @@
+<launch>
+	<rosparam command="load" file="$(find arm_move)/config/topics.yaml"/>
+	<rosparam command="load" file="$(find arm_move)/config/variables.yaml"/>
+	
+	<node name="manipulator_node" pkg="arm_move" type="manipulator_node" output="screen"/>
+</launch>

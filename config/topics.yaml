@@ -1,0 +1,17 @@
+joint_1_comand: /arm_joint_controll/joint_1_position_controller/command
+joint_2_comand: /arm_joint_controll/joint_2_position_controller/command
+joint_3_comand: /arm_joint_controll/joint_3_position_controller/command
+joint_4_comand: /arm_joint_controll/joint_4_position_controller/command
+joint_5_comand: /arm_joint_controll/joint_5_position_controller/command
+joint_6_comand: /arm_joint_controll/joint_6_position_controller/command
+
+joint_1_state: /arm_joint_controll/joint_1_position_controller/state
+joint_2_state: /arm_joint_controll/joint_2_position_controller/state
+joint_3_state: /arm_joint_controll/joint_3_position_controller/state
+joint_4_state: /arm_joint_controll/joint_4_position_controller/state
+joint_5_state: /arm_joint_controll/joint_5_position_controller/state
+joint_6_state: /arm_joint_controll/joint_6_position_controller/state
+
+tcp_pose: /gazebo/link_states
+
+gripper_actuator: /arm_joint_controll/joint_griper_left_position_controller/command

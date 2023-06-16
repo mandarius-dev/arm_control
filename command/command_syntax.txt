@@ -1,0 +1,11 @@
+A PTP_JOINT JOINTS @ @ @ @ @ @
+A PTP_COORD POSE @ @ @ @ @ @
+A CIRCLE POSE_INTERMEDIARY @ @ @ @ @ @ 
+A CIRCLE POSE_END @ @ @ @ @ @ 
+A LINE POSE @ @ @ @ @ @
+A SPLINE COMMAND @ 
+A SPLINE POSE @ @ @ @ @ @
+G OPEN 
+G CLOSE
+A PAUSE SECONDS @
+LOOP  
