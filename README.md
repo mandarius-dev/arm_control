@@ -1,12 +1,12 @@
 # Industrial manipulator - Source code Package
 ## Foreword
-This is a repository that is a part of five that are meant to help in designing a six degree-of-freedom manipulator.
+This is a repository that is a part of five that are meant to help in designing a six-degree-of-freedom manipulator.
 Repositories:
  1. **Source Code Package**
- 2. 3D Model Spawner Package 
- 3. MatLab Scripts
- 4. Model of the arm
- 5. User Interface in LabView
+ 2. 3D Model Spawner Package [[Link][spawner]]
+ 3. MatLab Scripts [[Link][script]]
+ 4. Model of the arm [[Link][model]]
+ 5. User Interface in LabView [[Link][UI]]
 ## Content 
 This repository contains the necessary code that will run a 6-DOF manipulator. It contains a `Kinematic` class that provides methods to aid in the generation process of the trajectories as well as methods that solve the direct and inverse kinematics.
 ## Installation and run 
@@ -88,3 +88,9 @@ Definitions of where the forbidden zones are in 3D space. The file should contai
 [g_pkgs]: https://github.com/JenniferBuehler/gazebo-pkgs/wiki/Installation
 [gripper]: https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins
 [ros_control]: http://wiki.ros.org/ros_control
+
+[UI]: https://github.com/mandarius-dev/arm_user_interface
+[spawner]: https://github.com/mandarius-dev/arm_model_spawner
+[script]: https://github.com/mandarius-dev/arm_matlab_scripts
+[control]: https://github.com/mandarius-dev/arm_control
+[model]: https://github.com/mandarius-dev/arm_3d_model
