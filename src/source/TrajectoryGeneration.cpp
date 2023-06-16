@@ -14,7 +14,7 @@ TrajectoryGeneration::TrajectoryGeneration(ros::NodeHandle *nh)
     data_pub = nh->advertise<geometry_msgs::Pose>("/data", 100);
 
     nh->getParam("tcp_pose", topic_name);
-    tcp_pose = nh->subscribe(topic_name, 1000, &TrajectoryGeneration::tcp_pose_callback, this);
+    //tcp_pose = nh->subscribe(topic_name, 1000, &TrajectoryGeneration::tcp_pose_callback, this);
 
     nh->getParam("step", step);
 
@@ -28,8 +28,6 @@ TrajectoryGeneration::TrajectoryGeneration(ros::NodeHandle *nh)
     std::string file = "/data/line_debug.txt";
     path += file;
 
-    pub_pose = nh->advertise<geometry_msgs::Pose>("current_pose", 100);
-
     debug_file.open(path, std::ios_base::app);
 }
 
@@ -40,10 +38,10 @@ TrajectoryGeneration::TrajectoryGeneration(ros::NodeHandle *nh)
  * 
  * @param[in] pose currnet pose of the manipulator
  */
-void TrajectoryGeneration::tcp_pose_callback(const gazebo_msgs::LinkStates &pose)
+/*void TrajectoryGeneration::tcp_pose_callback(const gazebo_msgs::LinkStates &pose)
 {
     tcp_current_pose = pose.pose[pose.pose.size()-1];
-}
+}*/
 
 #pragma endregion 
 
@@ -158,7 +156,7 @@ void TrajectoryGeneration::line(double *pose_start, double *pose_end, std::vecto
 
         t += step;
 
-        debug_file << tcp_current_pose.position.x - tcp_t[0] << ";" << tcp_current_pose.position.y - tcp_t[1] << ";" << tcp_current_pose.position.z - tcp_t[2] << std::endl;
+        //debug_file << tcp_current_pose.position.x - tcp_t[0] << ";" << tcp_current_pose.position.y - tcp_t[1] << ";" << tcp_current_pose.position.z - tcp_t[2] << std::endl;
     }
 }
 
@@ -496,9 +494,7 @@ bool TrajectoryGeneration::generate_instruction_buffer(std::vector<PlanCommand> 
 
             copy_state(end_pose, (plan_buffer[i].get_spline_pose())[1]);
 
-            print_values("curent_pose", current_pose_ptr, 6);
-
-            circle(current_pose_ptr, intermediat_pose, end_pose, full_path_points);
+            circle(current_pose, intermediat_pose, end_pose, full_path_points);
             instruction_buffer.push_back(InstructionCommand("MOVE", number_of_points, full_path_points.size()-1, false));
             number_of_points = full_path_points.size();
 
@@ -571,21 +567,7 @@ void TrajectoryGeneration::print_full_path_points()
 {
     ROS_INFO_STREAM("TG: Full path:");
     for(int i=0;i<full_path_points.size();i++)
-    {
         ROS_INFO_STREAM("TG: " << i << " " << full_path_points[i][0] << " " << full_path_points[i][1] << " " << full_path_points[i][2] << " " << full_path_points[i][3] << " " << full_path_points[i][4] << " " << full_path_points[i][5]);
-        
-        // geometry_msgs::Pose pose;
-
-        // pose.position.x = full_path_points[i][0];
-        // pose.position.y = full_path_points[i][1];
-        // pose.position.z = full_path_points[i][2];
-        // pose.orientation.x = full_path_points[i][3];
-        // pose.orientation.y = full_path_points[i][4];
-        // pose.orientation.z = full_path_points[i][5];
-        // pose.orientation.w = 0;
-
-        // pub_pose.publish(pose);
-    }
 }
 
 /**

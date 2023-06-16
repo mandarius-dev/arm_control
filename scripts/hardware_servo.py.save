@@ -1,0 +1,8 @@
+from adafruit_motor import servo
+
+class HardServo:
+	def __init__(self, pca_board, min, max, servo_num):
+		
+		self.servo = servo.Servo(pca_board.channels[servo_num], actuation_range = max - min)
+		
+		

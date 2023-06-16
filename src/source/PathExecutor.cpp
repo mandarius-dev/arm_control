@@ -1,5 +1,7 @@
 #include <arm_move/Source/PathExecutor.h>
 
+#define CONTINOUS_SERVO 1
+
 /**
  * @brief  Get the parameters from the param server and initializes the topics
  * 
@@ -30,8 +32,6 @@ PathExecutor::PathExecutor(ros::NodeHandle *nh)
     joint_5_pub = nh->advertise<std_msgs::Float64>(topic_name, 100);
     nh->getParam("joint_6_comand", topic_name);
     joint_6_pub = nh->advertise<std_msgs::Float64>(topic_name, 100);
-
-    pub_pose = nh->advertise<geometry_msgs::Pose>("current_pose", 100);
 
     nh->getParam("gripper_actuator", topic_name);
     gripper_actuator = nh->advertise<std_msgs::Float64>(topic_name, 100);
@@ -82,38 +82,41 @@ void PathExecutor::execute_path(std::vector<InstructionCommand> instruction_buff
             ROS_INFO_STREAM("PE: Gripping.");
             actuate_gripper(instruction_buffer[index].get_arg());
         }
-        
+
         if(instruction_buffer[index].get_name() == "MOVE")
         {
             ROS_INFO_STREAM("PE: Moving.");
-            double joints[6], tcp[6], pose[6];
+            double joints[6], tcp[6];
             for (int i = instruction_buffer[index].get_from(); ros::ok() && i <= instruction_buffer[index].get_to(); i++)
             {
                 std::copy(full_path_points[i].begin(), full_path_points[i].end(), tcp);
 
                 if(!instruction_buffer[index].is_joint_space())
                 {
-                    //publish_pose(tcp);
                     Kinematics::ik(dimensions, tcp, joints);
+
+                    if(CONTINOUS_SERVO)
+                    {
+                        int end = instruction_buffer[index].get_to();
+                        joints[0] = full_path_points[end][0];
+                        joints[3] = full_path_points[end][3];
+                        joints[5] = full_path_points[end][5];
+                    }
+
                     publish_joints(joints);
                 }
                 else
+                {
+                    if(CONTINOUS_SERVO)
+                    {
+                        int end = instruction_buffer[index].get_to();
+                        tcp[0] = full_path_points[end][0];
+                        tcp[3] = full_path_points[end][3];
+                        tcp[5] = full_path_points[end][5];
+                    }
+
                     publish_joints(tcp);
-                    //Kinematics::dk(dimensions, tcp, pose);
-                    //publish_pose(pose);
-
-        
-                geometry_msgs::Pose pose;
-
-                pose.position.x = full_path_points[i][0];
-                pose.position.y = full_path_points[i][1];
-                pose.position.z = full_path_points[i][2];
-                pose.orientation.x = full_path_points[i][3];
-                pose.orientation.y = full_path_points[i][4];
-                pose.orientation.z = full_path_points[i][5];
-                pose.orientation.w = 0;
-
-                pub_pose.publish(pose);
+                }
 
                 ros::Duration(sleep_time).sleep();
             }
@@ -121,21 +124,6 @@ void PathExecutor::execute_path(std::vector<InstructionCommand> instruction_buff
 
         index++;
     }
-}
-
-void PathExecutor::publish_pose(double *tcp)
-{
-    geometry_msgs::Pose pose;
-
-    pose.position.x = tcp[0];
-    pose.position.y = tcp[1];
-    pose.position.z = tcp[2];
-    pose.orientation.x = tcp[3];
-    pose.orientation.y = tcp[4];
-    pose.orientation.z = tcp[5];
-    pose.orientation.w = 0;
-
-    pub_pose.publish(pose);
 }
 
 /**

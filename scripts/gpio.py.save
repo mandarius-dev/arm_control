@@ -1,0 +1,75 @@
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(12, GPIO.OUT)
+
+servo = GPIO.PWM(12, 50)
+
+servo.start(0)
+time.sleep(1)
+print("servo start")
+
+velocity_deg_sec = 157
+stop_duty = 7
+start_duty = 6
+
+current_angle_degrees = 0
+
+def go_to_angle(curr angle_degrees):
+	angle_to_move = angle_degrees - current_angle
+	current_angle_degrees = current_angle_degrees + angle_degrees
+	move_angle(angle_to_move)
+
+def move_angle(angle_degrees):
+	#current_angle_degrees = current_angle_degrees + angle_degrees
+	on_time = angle_degrees/velocity_deg_sec
+	print(on_time)
+	servo.ChangeDutyCycle(start_duty)
+	time.sleep(on_time)
+	servo.ChangeDutyCycle(stop_duty)
+
+go_to_angle(180)
+time.sleep(1)
+go_to_angle(90)
+#time.sleep(1)
+#go_to_angle(90)
+
+#move_angle(12)
+#time.sleep(0.01)
+#go_to_angle(13)
+#time.sleep(0.01)
+#go_to_angle(14)
+
+
+#print("Full speed?")
+#servo.ChangeDutyCycle(2)
+#time.sleep(3)
+
+#print("slower")
+#servo.ChangeDutyCycle(6)
+#time.sleep(1)
+
+#print("stop")
+#servo.ChangeDutyCycle(7)
+#time.sleep(1)
+
+#print("speed")
+#servo.ChangeDutyCycle(12)
+#time.sleep(1)
+
+#duty = 2
+#while(duty < 12):
+#	servo.ChangeDutyCycle(duty)
+#	time.sleep(1)
+#	duty = duty + 1
+
+#servo.ChangeDutyCycle(2)
+#time.sleep(1)
+#servo.ChangeDutyCycle(0)
+#time.sleep(1)
+
+servo.stop()
+GPIO.cleanup()
+print("done")

@@ -9,7 +9,7 @@
 #include <std_msgs/Float64.h>
 #include <geometry_msgs/Pose.h>
 #include <sensor_msgs/JointState.h>
-#include <gazebo_msgs/LinkStates.h>
+//#include <gazebo_msgs/LinkStates.h>
 #include <control_msgs/JointControllerState.h>
 
 #include <arm_move/Commands/PlanCommand.h>
@@ -28,13 +28,11 @@ private:
     // Length of the control points
     double spline_distance_ratio;
 
-    ros::Publisher pub_pose;
-
     std::vector<InstructionCommand> instruction_buffer;
     std::vector<std::vector<double>> full_path_points;
 
     std::fstream debug_file;
-    geometry_msgs::Pose tcp_current_pose;
+    //geometry_msgs::Pose tcp_current_pose;
     ros::Subscriber tcp_pose;
     ros::Publisher data_pub;
 
@@ -63,7 +61,7 @@ private:
     void generate_rotation_length(Eigen::Vector3d start_rotation, Eigen::Vector3d end_rotation, std::vector<Eigen::Vector3d> &spline_rotations);
 
     // Get the curent pose of the manipulator
-    void tcp_pose_callback(const gazebo_msgs::LinkStates &pose);
+    //void tcp_pose_callback(const gazebo_msgs::LinkStates &pose);
 
 public:
     // Construct a new Trajectory Generation:: Trajectory Generation object and gets the paramters from the param server

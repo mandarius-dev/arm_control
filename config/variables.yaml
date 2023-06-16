@@ -1,13 +1,13 @@
 pkg_name: "arm_move"
 
 command_syntax_path: "/command/command_syntax.txt"
-command_path: "/command/circle_path.txt"
+command_path: "/command/joint5_test.txt"
 
 step: 0.01
-sleep_time: 0.1
-dimensions: [ 0.9, 1.3, 2.5, 1.25, 1.25, 1 ]
+sleep_time: 0.04
+dimensions: [ 9, 16.5, 20, 11, 9.5, 11 ]
 spline_distance_ratio: 2.5
 gripper_actuation_time: 1.5
 
-z_offcet: 0.6
+z_offcet: 0.0
 link_radius: 1.5

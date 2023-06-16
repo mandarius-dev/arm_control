@@ -3,7 +3,6 @@
 #include <iomanip>
 
 #include <std_msgs/Float64.h>
-#include <geometry_msgs/Pose.h>
 
 #include <arm_move/Commands/InstructionCommand.h>
 
@@ -18,8 +17,6 @@ private:
     ros::Publisher joint_4_pub;
     ros::Publisher joint_5_pub;
     ros::Publisher joint_6_pub;
-
-    ros::Publisher pub_pose;
     
     ros::Publisher gripper_actuator;
 
@@ -40,8 +37,6 @@ private:
 
     // Copy elements from a std vector to a classic one
     void copy_state(double *where, std::vector<double> from);
-
-    void publish_pose(double *tcp);
 public:
     // Get the parameters from the param server and initializes the topics
     PathExecutor(ros::NodeHandle *nh);

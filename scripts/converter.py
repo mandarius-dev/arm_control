@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # publish_rate = rospy.get_param('~publish_rate', 10)
 
     gp = GazeboLinkPose('arm_scale::link_6')
-    publish_rate = 9.95
+    publish_rate = 100
 
     rate = rospy.Rate(publish_rate)
     while not rospy.is_shutdown():
